@@ -1,8 +1,8 @@
-package bestteam.quiztest.model;
+package bestteam.quiztest.model.template;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public enum AppUserRole implements GrantedAuthority {
+public enum UserRole implements GrantedAuthority {
   ROLE_ADMIN,
   ROLE_USER;
 
