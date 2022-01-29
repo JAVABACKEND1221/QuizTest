@@ -46,7 +46,7 @@ public class QuestionsService {
         return byId.orElse(null);
     }
 
-    public Questions edit(Integer id, QuestionsDto questionsDto){
+    public ApiResponse edit(Integer id, QuestionsDto questionsDto){
         Optional<Questions> byId = questionsRepository.findById(id);
 
         if (byId.isPresent()){
@@ -57,21 +57,16 @@ public class QuestionsService {
             editQuestion.setOptionB(questionsDto.getOptionB());
             editQuestion.setOptionC(questionsDto.getOptionC());
 
-            return questionsRepository.save(editQuestion);
+            questionsRepository.save(editQuestion);
+
+            return new ApiResponse("Edit question",true,editQuestion.getName());
         }
 
-        return null;
+        return new ApiResponse("Question is not edit",false);
     }
 
-    public Questions delete(Integer id, QuestionsDto questionsDto){
-        Optional<Questions> byId = questionsRepository.findById(id);
-
-        if(byId.isPresent()){
-            Questions deleteQuestion = byId.get();
-            deleteQuestion.setActive(questionsDto.isActive());
-
-            return questionsRepository.save(deleteQuestion);
-        }
-        return null;
+    public ApiResponse delete(Integer id){
+        questionsRepository.deleteById(id);
+        return new ApiResponse("Question delete",true);
     }
 }
